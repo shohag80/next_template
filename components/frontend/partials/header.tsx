@@ -104,6 +104,7 @@ export default function Header() {
           </div>
         </DialogPanel>
       </Dialog>
+      <hr className="border-gray-300" />
     </header>
   );
 }
