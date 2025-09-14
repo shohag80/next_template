@@ -53,8 +53,8 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
           <div className="relative w-32 h-8 rounded-full bg-gray-200 p-1">
-            <input type="radio" id="light" name="switch" className="sr-only" checked />
-            <input type="radio" id="dark" name="switch" className="sr-only peer" />
+            <input type="radio" id="light" name="switch" className="sr-only" value="0" />
+            <input type="radio" id="dark" name="switch" className="sr-only peer" value="1" />
             <div
               className="absolute top-1 w-1/2 h-6 bg-white rounded-full shadow transition-transform duration-200 ease-in-out
              peer-checked:translate-x-14"
