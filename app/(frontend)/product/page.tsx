@@ -87,7 +87,7 @@ export default function Example() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-30 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl text-gray-800 mb-2 font-bold">
+        <h2 className="text-3xl text-gray-800 mb-2 font-bold">
           Popular Products
         </h2>
         <input
