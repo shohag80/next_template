@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -12,8 +12,44 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard" },
 ];
 
-export default function Header() {
+interface Props {
+  themeValue: string;
+}
+
+export default function Header({ themeValue }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("light");
+
+  const changeTheme = (type: "light" | "dark") => {
+    if (type == "light") {
+      setTheme(type);
+      cookieStore.set("theme", type);
+    } else {
+      setTheme(type);
+      cookieStore.set("theme", type);
+    }
+    location.reload();
+  };
+
+  useEffect(() => {
+    setTheme(themeValue == "light" ? "light" : "dark");
+    if (themeValue === "light") {
+      const checkBox = document.getElementById(
+        "light"
+      ) as HTMLInputElement | null;
+      if (checkBox) {
+        checkBox.checked = true;
+      }
+    } else {
+      const checkBox = document.getElementById(
+        "dark"
+      ) as HTMLInputElement | null;
+      if (checkBox) {
+        checkBox.checked = true;
+      }
+    }
+  }, []);
+
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
@@ -52,16 +88,43 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
-          <div className="relative w-32 h-8 rounded-full bg-gray-200 p-1">
-            <input type="radio" id="light" name="switch" className="sr-only" value="0" />
-            <input type="radio" id="dark" name="switch" className="sr-only peer" value="1" />
+          <div
+            className={`${
+              theme == "light" ? "bg-gray-200" : "bg-gray-800"
+            } relative w-32 h-8 rounded-full p-1`}
+          >
+            <input
+              type="radio"
+              id="light"
+              name="switch"
+              className="sr-only"
+              value="0"
+              onClick={() => changeTheme("light")}
+            />
+            <input
+              type="radio"
+              id="dark"
+              name="switch"
+              className="sr-only peer"
+              value="1"
+              onClick={() => changeTheme("dark")}
+            />
             <div
-              className="absolute top-1 w-1/2 h-6 bg-white rounded-full shadow transition-transform duration-200 ease-in-out
-             peer-checked:translate-x-14"
+              className={`${
+                theme == "light" ? "bg-gray-50" : "bg-gray-600"
+              } absolute top-1 w-1/2 h-6 rounded-full shadow transition-transform duration-200 ease-in-out
+             peer-checked:translate-x-14`}
             ></div>
 
-            <div className="relative grid grid-cols-2 h-full text-sm font-medium text-gray-700">
-              <label htmlFor="light" className="flex items-center justify-center cursor-pointer select-none">
+            <div
+              className={`${
+                theme == "light" ? "text-black" : "text-white"
+              } relative grid grid-cols-2 h-full text-sm font-medium`}
+            >
+              <label
+                htmlFor="light"
+                className="flex items-center justify-center cursor-pointer select-none"
+              >
                 <svg viewBox="0 0 28 28" height="25px" fill="none">
                   <circle
                     cx="14"
@@ -111,7 +174,10 @@ export default function Header() {
                   ></path>
                 </svg>
               </label>
-              <label htmlFor="dark" className="flex items-center justify-center cursor-pointer select-none">
+              <label
+                htmlFor="dark"
+                className="flex items-center justify-center cursor-pointer select-none"
+              >
                 <svg height="25px" viewBox="0 0 28 28" fill="none">
                   <path
                     d="M10.5 9.99914C10.5 14.1413 13.8579 17.4991 18 17.4991C19.0332 17.4991 20.0176 17.2902 20.9132 16.9123C19.7761 19.6075 17.109 21.4991 14 21.4991C9.85786 21.4991 6.5 18.1413 6.5 13.9991C6.5 10.8902 8.39167 8.22304 11.0868 7.08594C10.7089 7.98159 10.5 8.96597 10.5 9.99914Z"

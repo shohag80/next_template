@@ -26,14 +26,15 @@ export default async function FrontendLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = await cookies();
-  const theme = cookieStore.get("theme")?.toString() ?? "bg-white";
+  const themeType = cookieStore.get("theme")?.value.toString() || 'light';
+  const theme = themeType === 'light' ? 'bg-white' : 'bg-gray-700';
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className={theme}>
-          <Header />
+          <Header themeValue={themeType} />
           {children}
           <Footer />
         </div>
