@@ -20,10 +20,9 @@ const user = {
 };
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Team", href: "/team", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Product", href: "/product-setup", current: false },
   { name: "Reports", href: "#", current: false },
+  { name: "Users", href: "/users", current: false },
   { name: "Website", href: "/", current: false },
 ];
 const userNavigation = [
