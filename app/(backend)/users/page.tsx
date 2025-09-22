@@ -223,6 +223,7 @@ export default function UsersPage() {
             loading={loading}
             columns={columns}
             dataSource={data}
+            scroll={{ x: "max-content" }}
           />
         </div>
       </main>

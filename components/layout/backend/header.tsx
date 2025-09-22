@@ -12,6 +12,7 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const user = {
   name: "Tom Cook",
@@ -19,11 +20,11 @@ const user = {
   imageUrl: "https://avatars.githubusercontent.com/u/90141002?v=4",
 };
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Product", href: "/product-setup", current: false },
-  { name: "Reports", href: "#", current: false },
-  { name: "Users", href: "/users", current: false },
-  { name: "Website", href: "/", current: false },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Product", href: "/product-setup" },
+  { name: "Reports", href: "#" },
+  { name: "Users", href: "/users" },
+  { name: "Website", href: "/" },
 ];
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -41,6 +42,7 @@ interface Props {
 
 export default function Example({ themeValue }: Props) {
   const [theme, setTheme] = useState("light");
+  const route = usePathname();
 
   const changeTheme = (type: "light" | "dark") => {
     if (type == "light") {
@@ -90,12 +92,11 @@ export default function Example({ themeValue }: Props) {
                     <Link
                       href={item.href}
                       className={classNames(
-                        item.current
+                        item.href == route
                           ? "bg-gray-900 text-white"
                           : "text-gray-300 hover:bg-white/5 hover:text-white",
                         "rounded-md px-3 py-2 text-sm font-medium"
                       )}
-                      aria-current={item.current ? "page" : undefined}
                       key={item.name}
                     >
                       {item.name}
@@ -284,9 +285,8 @@ export default function Example({ themeValue }: Props) {
                 key={item.name}
                 as="a"
                 href={item.href}
-                aria-current={item.current ? "page" : undefined}
                 className={classNames(
-                  item.current
+                  item.href == route
                     ? "bg-gray-900 text-white"
                     : "text-gray-300 hover:bg-white/5 hover:text-white",
                   "block rounded-md px-3 py-2 text-base font-medium"
