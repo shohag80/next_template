@@ -1,24 +1,37 @@
-"use client"
+"use client";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef, TableColumnsType, TableColumnType } from "antd";
 import { Button, Input, Space, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
+
 interface DataType {
-  key: string;
+  id: string;
   name: string;
-  age: number;
-  address: string;
+  email: string;
+  email_verified_at: number;
+  active_status: number;
 }
+
+type UsersTableProps = {
+  users: DataType[];
+};
 
 type DataIndex = keyof DataType;
 
-const data: DataType[] = [];
-export default function DashboardPage() {
+export default function UsersTable({ users }: UsersTableProps) {
+  const [data, setData] = useState<DataType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
+
+  useEffect(() => {
+    setData(users);
+    setLoading(false);
+  });
 
   const handleSearch = (
     selectedKeys: string[],
@@ -120,45 +133,82 @@ export default function DashboardPage() {
 
   const columns: TableColumnsType<DataType> = [
     {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+      width: "15%",
+      ...getColumnSearchProps("id"),
+    },
+    {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: "30%",
-      ...getColumnSearchProps("name"),
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
       width: "20%",
-      ...getColumnSearchProps("age"),
+      ...getColumnSearchProps("name"),
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-      sorter: (a, b) => a.address.length - b.address.length,
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "20%",
+      ...getColumnSearchProps("email"),
+    },
+    {
+      title: "Verified Time",
+      dataIndex: "email_verified_at",
+      key: "email_verified_at",
+      width: "15%",
+      ...getColumnSearchProps("email_verified_at"),
+    },
+    {
+      title: "Active Status",
+      dataIndex: "active_status",
+      key: "active_status",
+      width: "15%",
+      render: (active_status: number) =>
+        active_status === 1 ? (
+          <span className="text-green-700 font-bold">Active</span>
+        ) : (
+          <span className="text-gray-500 font-bold">Inactive</span>
+        ),
+      sorter: (a, b) => a.active_status - b.active_status,
       sortDirections: ["descend", "ascend"],
+    },
+    {
+      title: "Actions",
+      dataIndex: "id",
+      key: "action",
+      width: "15%",
+      render: (id: string) => (
+        <>
+          <Link href={`/user/view/${id}`}>
+            <span className="bg-[#4a5246] text-white p-2 rounded-md">View</span>
+          </Link>{" "}
+          <Link href={`/user/edit/${id}`}>
+            <span className="bg-[#046e00] text-white p-2 rounded-md">Edit</span>
+          </Link>{" "}
+          <Link href={`/user/delete/${id}`}>
+            <span className="bg-[#db2d02] text-white p-2 rounded-md">
+              Delete
+            </span>
+          </Link>
+        </>
+      ),
     },
   ];
   return (
-    <div>
-      <header className="relative shadow-sm">
-        <div className="flex justify-between mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Products List
-          </h1>
-          <Link href={`/product-setup/add-new-product`} className="bg-[#0d2250] p-2 rounded-md font-bold">
-            Add New
-          </Link>
-        </div>
-      </header>
-      <main>
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 text-gray-900">
-          <Table<DataType> bordered loading={false} columns={columns} dataSource={data} />
-        </div>
-      </main>
-    </div>
+    <>
+      <Table<DataType>
+        bordered
+        size={`small`}
+        loading={loading}
+        columns={columns}
+        dataSource={data}
+        rowKey="id"
+        scroll={{ x: "max-content" }}
+      />
+    </>
   );
 }
