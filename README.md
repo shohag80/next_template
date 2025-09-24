@@ -2,16 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Run the following command:
 
 ```bash
+git clone https://github.com/shohag80/next_template.git
+cd next_template
+npm i
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -20,6 +17,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Notificaton (React Toastify)
+
+```bash
+// install (if needed)
+npm i --save react-toastify
+
+// use
+import { ToastContainer, toast } from 'react-toastify';
+export default function App() {
+  const notify = () => toast('Hi, Shohag!');
+
+  return (
+    <div className="grid place-items-center h-dvh bg-zinc-900/15">
+      <Button onClick={notify}>Notify !</Button>
+      <ToastContainer />
+    </div>
+  );
+}
+```
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
