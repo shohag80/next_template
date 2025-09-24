@@ -48,7 +48,7 @@ export default function UserInfoPage() {
       <main>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 text-gray-900">
           <div className="border border-gray-300 p-10 rounded-2xl">
-            <h1 className="text-2xl font-bold">{data?.name}</h1>
+            <h1 className="text-2xl font-bold">{data?.name}</h1><hr className="border-gray-300 mt-8" />
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-6">
                 <label
