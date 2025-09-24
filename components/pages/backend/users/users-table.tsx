@@ -160,7 +160,6 @@ export default function UsersTable({ users }: UsersTableProps) {
       dataIndex: "email_verified_at",
       key: "email_verified_at",
       width: "15%",
-      ...getColumnSearchProps("email_verified_at"),
     },
     {
       title: "Active Status",
@@ -183,17 +182,23 @@ export default function UsersTable({ users }: UsersTableProps) {
       width: "15%",
       render: (id: string) => (
         <>
-          <Link href={`/user/view/${id}`}>
-            <span className="bg-[#4a5246] text-white p-2 rounded-md">View</span>
-          </Link>{" "}
-          <Link href={`/user/edit/${id}`}>
-            <span className="bg-[#046e00] text-white p-2 rounded-md">Edit</span>
-          </Link>{" "}
-          <Link href={`/user/delete/${id}`}>
-            <span className="bg-[#db2d02] text-white p-2 rounded-md">
-              Delete
-            </span>
-          </Link>
+          <div className="flex justify-between">
+            <Link href={`/users/${id}`}>
+              <span className="bg-[#4a5246] text-white p-2 rounded-md">
+                View
+              </span>
+            </Link>
+            <Link href={`/users/edit/${id}`}>
+              <span className="bg-[#046e00] text-white p-2 rounded-md">
+                Edit
+              </span>
+            </Link>
+            <Link href={`/users/delete/${id}`}>
+              <span className="bg-[#db2d02] text-white p-2 rounded-md">
+                Delete
+              </span>
+            </Link>
+          </div>
         </>
       ),
     },

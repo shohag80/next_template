@@ -117,6 +117,7 @@ export default function Example({ themeValue }: Props) {
                 className="sr-only"
                 value="0"
                 onClick={() => changeTheme("light")}
+                readOnly
               />
               <input
                 type="radio"
@@ -125,6 +126,7 @@ export default function Example({ themeValue }: Props) {
                 className="sr-only peer"
                 value="1"
                 onClick={() => changeTheme("dark")}
+                readOnly
               />
               <div
                 className={`${

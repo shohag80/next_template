@@ -17,7 +17,7 @@ export default function UsersPage() {
       }
     }
     fetchUsers();
-  });
+  },[]);
 
   return (
     <div>
@@ -26,7 +26,7 @@ export default function UsersPage() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             All Users
           </h1>
-          <Link href={`/users/add-new-user`} className="bg-[#0d2250] p-2 rounded-md font-bold">
+          <Link href={`/users/new-user`} className="bg-[#0d2250] p-2 rounded-md font-bold">
             Add New
           </Link>
         </div>
