@@ -70,6 +70,7 @@ export default function UserInfoPage() {
           const user_data = response.data.data;
           toast.success(user_data.name + " is updated successfully.");
         }
+        formDataReset();
       } catch (errors: any) {
         for (const error of errors?.response?.data?.meta?.message || []) {
           toast.error(error);
@@ -77,7 +78,6 @@ export default function UserInfoPage() {
         }
       }
     }
-    formDataReset();
   }
 
   // reset form data

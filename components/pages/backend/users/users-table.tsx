@@ -1,10 +1,26 @@
 "use client";
 import Link from "next/link";
+import url from "@/app/_route/route";
 import React, { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef, TableColumnsType, TableColumnType } from "antd";
-import { Button, Input, Space, Table } from "antd";
+import {
+  Button,
+  Input,
+  Space,
+  Table,
+  message,
+  Popconfirm,
+  PopconfirmProps,
+} from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
+import api from "@/config/service/api";
+
+
+interface UsersTableProps {
+  users: DataType[];
+  fetchUsersData: () => void;
+};
 
 interface DataType {
   id: string;
@@ -14,13 +30,9 @@ interface DataType {
   active_status: number;
 }
 
-type UsersTableProps = {
-  users: DataType[];
-};
-
 type DataIndex = keyof DataType;
 
-export default function UsersTable({ users }: UsersTableProps) {
+export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   const [data, setData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +43,7 @@ export default function UsersTable({ users }: UsersTableProps) {
   useEffect(() => {
     setData(users);
     setLoading(false);
-  });
+  },[users]);
 
   const handleSearch = (
     selectedKeys: string[],
@@ -131,6 +143,18 @@ export default function UsersTable({ users }: UsersTableProps) {
     render: (text) => text,
   });
 
+  const confirm =
+    (id: string): PopconfirmProps["onConfirm"] =>
+    async (e) => {
+      try {
+        await api.delete("/user/" + id);
+        fetchUsersData();
+        message.success("User deleted successfully!");
+      } catch (error) {
+        message.error("User delettion fails!");
+      }
+    };
+
   const columns: TableColumnsType<DataType> = [
     {
       title: "Id",
@@ -145,8 +169,9 @@ export default function UsersTable({ users }: UsersTableProps) {
       key: "name",
       width: "20%",
       ...getColumnSearchProps("name"),
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.name.localeCompare(b.name),
       sortDirections: ["descend", "ascend"],
+      showSorterTooltip:true,
     },
     {
       title: "Email",
@@ -180,24 +205,34 @@ export default function UsersTable({ users }: UsersTableProps) {
       dataIndex: "id",
       key: "action",
       width: "15%",
-      render: (id: string) => (
+      render: (id, record) => ( // record{full object}
         <>
           <div className="flex justify-between">
-            <Link href={`/users/${id}`}>
+            <Link href={url.b_userView(id)}>
               <span className="bg-[#4a5246] text-white p-2 rounded-md">
                 View
               </span>
             </Link>
-            <Link href={`/users/edit/${id}`}>
+            <Link href={url.b_editUserInfo(id)}>
               <span className="bg-[#046e00] text-white p-2 rounded-md">
                 Edit
               </span>
             </Link>
-            <Link href={`/users/delete/${id}`}>
-              <span className="bg-[#db2d02] text-white p-2 rounded-md">
-                Delete
-              </span>
-            </Link>
+            <Popconfirm
+              placement="right"
+              title="Delete the user"
+              description="Are you sure to delete me?"
+              onConfirm={confirm(id)}
+              // onCancel={cancel(record.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Link href="#">
+                <span className="bg-[#db2d02] text-white p-2 rounded-md">
+                  Delete
+                </span>
+              </Link>
+            </Popconfirm>
           </div>
         </>
       ),
@@ -206,12 +241,12 @@ export default function UsersTable({ users }: UsersTableProps) {
   return (
     <>
       <Table<DataType>
-        bordered
-        size={`small`}
-        loading={loading}
-        columns={columns}
-        dataSource={data}
         rowKey="id"
+        size={`small`}
+        columns={columns}
+        loading={loading}
+        dataSource={data}
+        bordered
         scroll={{ x: "max-content" }}
       />
     </>

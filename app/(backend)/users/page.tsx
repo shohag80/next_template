@@ -3,19 +3,20 @@ import UsersTable from "@/components/pages/backend/users/users-table";
 import Link from "next/link";
 import api from "@/config/service/api";
 import React, { useEffect, useState } from "react";
+import url from "@/app/_route/route";
 
 export default function UsersPage() {
   const [data, setData] = useState([]);
+  async function fetchUsers() {
+    try {
+      const res = await api.get("/users");
+      setData(res.data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   useEffect(() => {
-    async function fetchUsers() {
-      try {
-        const res = await api.get("/users");
-        setData(res.data.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
     fetchUsers();
   }, []);
 
@@ -27,7 +28,7 @@ export default function UsersPage() {
             All Users
           </h1>
           <Link
-            href={`/users/new-user`}
+            href={url.b_newUser}
             className="bg-[#0d2250] p-2 rounded-md font-bold"
           >
             Add New
@@ -36,7 +37,7 @@ export default function UsersPage() {
       </header>
       <main>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 text-gray-900">
-          <UsersTable users={data} />
+          <UsersTable users={data} fetchUsersData={fetchUsers} />
         </div>
       </main>
     </div>
