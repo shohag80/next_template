@@ -5,6 +5,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef, TableColumnsType, TableColumnType } from "antd";
 import { Button, Input, Space, Table } from "antd";
 import type { FilterDropdownProps } from "antd/es/table/interface";
+import url from "@/app/_route/route";
 interface DataType {
   key: string;
   name: string;
@@ -149,7 +150,7 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Products List
           </h1>
-          <Link href={`/product-setup/add-new-product`} className="bg-[#0d2250] p-2 rounded-md font-bold">
+          <Link href={url.b_addNewProdut} className="bg-[#0d2250] p-2 rounded-md font-bold">
             Add New
           </Link>
         </div>

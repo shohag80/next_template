@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import url from "@/app/_route/route";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Product", href: "/product" },
-  { name: "Features", href: "/feature" },
-  { name: "Dashboard", href: "/dashboard" },
+  { name: "Product", href: url.f_product },
+  { name: "Features", href: url.f_feature },
+  { name: "Dashboard", href: url.b_dashboard },
 ];
 
 interface Props {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import url from "@/app/_route/route";
 
 const products = [
   {
@@ -83,7 +84,7 @@ const products = [
   },
 ];
 
-export default function Example() {
+export default function Products() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-30 lg:max-w-7xl lg:px-8">
@@ -100,7 +101,7 @@ export default function Example() {
           {products.map((product) => (
             <Link
               key={product.id}
-              href={`product/${product.id}`}
+              href={url.f_productById(product.id)}
               className="group"
             >
               <img

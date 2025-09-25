@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import './globals.css'
 import GoBack from '@/components/pages/go-back'
+import url from './_route/route'
 export default function NotFound() {
   return (
     <>
@@ -15,7 +16,7 @@ export default function NotFound() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <GoBack/>
-            <Link href="/contact" className="text-sm font-semibold text-gray-900">
+            <Link href={url.f_contact} className="text-sm font-semibold text-gray-900">
               Contact support <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>

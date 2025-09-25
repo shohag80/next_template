@@ -1,0 +1,38 @@
+const url = {
+  //************* */ frontend url /*********** */
+  f_contact: "contact",
+  f_productById: (id: number) => `product/${id}`,
+    f_product:'product',
+    f_feature:'feature',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+  //   f_:'',
+
+  //************* */ backend url /************* */
+  b_userView: (id: number) => `users/${id}`,
+  b_newUser: "users/new-user",
+  b_addNewProdut: "product-setup/add-new-product",
+  b_editUserInfo: (id: number) => `/users/edit/${id}`,
+  b_dashboard: "dashboard",
+  b_products: "product-setup",
+  b_users: "users",
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+  //   b_:'',
+};
+export default url;

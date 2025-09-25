@@ -13,6 +13,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import url from "@/app/_route/route";
 
 const user = {
   name: "Tom Cook",
@@ -20,10 +21,10 @@ const user = {
   imageUrl: "https://avatars.githubusercontent.com/u/90141002?v=4",
 };
 const navigation = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Product", href: "/product-setup" },
+  { name: "Dashboard", href: url.b_dashboard },
+  { name: "Product", href: url.b_products },
   { name: "Reports", href: "#" },
-  { name: "Users", href: "/users" },
+  { name: "Users", href: url.b_users },
   { name: "Website", href: "/" },
 ];
 const userNavigation = [
