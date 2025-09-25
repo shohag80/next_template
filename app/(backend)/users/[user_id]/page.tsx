@@ -23,8 +23,10 @@ export default function UserInfoPage() {
         setData(response.data.data);
       }
     }
-    fetchUserInfo();
-  }, []);
+    if(route?.user_id){
+      fetchUserInfo();
+    }
+  }, [route?.user_id]);
 
   let formattedDate = "";
   if (data?.created_at) {

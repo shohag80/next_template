@@ -35,7 +35,6 @@ type DataIndex = keyof DataType;
 export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   const [data, setData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
@@ -145,14 +144,10 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
 
   const confirm =
     (id: string): PopconfirmProps["onConfirm"] =>
-    async (e) => {
-      try {
+    async () => {
         await api.delete("/user/" + id);
         fetchUsersData();
         message.success("User deleted successfully!");
-      } catch (error) {
-        message.error("User delettion fails!");
-      }
     };
 
   const columns: TableColumnsType<DataType> = [
@@ -205,7 +200,7 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
       dataIndex: "id",
       key: "action",
       width: "15%",
-      render: (id, record) => ( // record{full object}
+      render: (id) => ( //use (record){for full object}
         <>
           <div className="flex justify-between">
             <Link href={url.b_userView(id)}>
@@ -240,6 +235,8 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   ];
   return (
     <>
+    <span className="font-bold py-3">You Search: {searchText} this value of
+    {searchedColumn} column;</span>
       <Table<DataType>
         rowKey="id"
         size={`small`}

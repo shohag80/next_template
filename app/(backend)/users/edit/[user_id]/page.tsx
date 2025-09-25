@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import GoBack from "@/components/pages/go-back";
 import api from "@/config/service/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,9 +12,19 @@ interface DataType {
   password_confirmation: string;
 }
 
+interface APIErrorResponse {
+  response?: {
+    data?: {
+      meta?: {
+        message?: string[];
+      };
+    };
+  };
+}
+
+
 export default function UserInfoPage() {
   const param = useParams();
-  const route = useRouter();
   const [data, setData] = useState<DataType>();
   const [formData, setFormData] = useState<DataType>({
     name: "",
@@ -37,8 +47,10 @@ export default function UserInfoPage() {
         });
       }
     }
-    fetchUserInfo();
-  }, []);
+    if (param?.user_id) {
+      fetchUserInfo();
+    }
+  }, [param?.user_id]);
 
   // Handles form data changes
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -71,7 +83,8 @@ export default function UserInfoPage() {
           toast.success(user_data.name + " is updated successfully.");
         }
         formDataReset();
-      } catch (errors: any) {
+      } catch (e) {
+        const errors = e as APIErrorResponse;
         for (const error of errors?.response?.data?.meta?.message || []) {
           toast.error(error);
           await new Promise((resolve) => setTimeout(resolve, 150));
@@ -96,7 +109,7 @@ export default function UserInfoPage() {
       <header className="relative shadow-sm">
         <div className="flex justify-between mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            {data?.name}'s Info
+            {data?.name}&apos;s Info
           </h1>
           <GoBack name="Back" />
         </div>

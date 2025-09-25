@@ -1,5 +1,6 @@
 "use client";
 import { StarIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -42,43 +43,48 @@ const product = {
 const products = [
   {
     id: 1,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
+    name: "Basic Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
     imageAlt: "Front of men's Basic Tee in black.",
-    price: '$35',
-    color: 'Black',
+    price: "$35",
+    color: "Black",
   },
   {
     id: 2,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg',
+    name: "Basic Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
     imageAlt: "Front of men's Basic Tee in white.",
-    price: '$35',
-    color: 'Aspen White',
+    price: "$35",
+    color: "Aspen White",
   },
   {
     id: 3,
-    name: 'Basic Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg',
+    name: "Basic Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
     imageAlt: "Front of men's Basic Tee in dark gray.",
-    price: '$35',
-    color: 'Charcoal',
+    price: "$35",
+    color: "Charcoal",
   },
   {
     id: 4,
-    name: 'Artwork Tee',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg',
-    imageAlt: "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
-    price: '$35',
-    color: 'Iso Dots',
+    name: "Artwork Tee",
+    href: "#",
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    imageAlt:
+      "Front of men's Artwork Tee in peach with white and brown dots forming an isometric cube.",
+    price: "$35",
+    color: "Iso Dots",
   },
-]
+];
 
-function classNames(...classes: any) {
+function classNames(...classes: (string | boolean | undefined | null)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -88,7 +94,9 @@ export default function Example() {
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:pt-24 lg:max-w-7xl lg:px-8">
         <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
           <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-            <img
+            <Image
+            height={120}
+            width={120}
               alt={product.imageAlt}
               src={product.imageSrc}
               className="aspect-2/3 w-full rounded-lg bg-gray-100 object-cover sm:col-span-4 lg:col-span-5"
@@ -183,8 +191,9 @@ export default function Example() {
                     </div>
 
                     <div className="mt-2 grid grid-cols-4 gap-3">
-                      {product.sizes.map((size) => (
+                      {product.sizes.map((size, key) => (
                         <label
+                          key={key}
                           aria-label={size.name}
                           className="group relative flex items-center justify-center rounded-md border border-gray-300 bg-white p-3 has-checked:border-indigo-600 has-checked:bg-indigo-600 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-indigo-600 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25"
                         >
@@ -217,12 +226,16 @@ export default function Example() {
         </div>
       </div>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+          Customers also purchased
+        </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
             <div key={product.id} className="group relative">
-              <img
+              <Image
+              height={120}
+            width={120}
                 alt={product.imageAlt}
                 src={product.imageSrc}
                 className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
@@ -237,7 +250,9 @@ export default function Example() {
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                 </div>
-                <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {product.price}
+                </p>
               </div>
             </div>
           ))}

@@ -14,6 +14,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import url from "@/app/_route/route";
+import Image from "next/image";
 
 const user = {
   name: "Tom Cook",
@@ -33,7 +34,7 @@ const userNavigation = [
   { name: "Sign out", href: "#" },
 ];
 
-function classNames(...classes: any) {
+function classNames(...classes: (string|boolean|undefined|null)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -57,23 +58,25 @@ export default function Example({ themeValue }: Props) {
   };
 
   useEffect(() => {
-    setTheme(themeValue == "light" ? "light" : "dark");
-    if (themeValue === "light") {
-      const checkBox = document.getElementById(
-        "light"
-      ) as HTMLInputElement | null;
-      if (checkBox) {
-        checkBox.checked = true;
-      }
-    } else {
-      const checkBox = document.getElementById(
-        "dark"
-      ) as HTMLInputElement | null;
-      if (checkBox) {
-        checkBox.checked = true;
+    if(themeValue){
+      setTheme(themeValue == "light" ? "light" : "dark");
+      if (themeValue === "light") {
+        const checkBox = document.getElementById(
+          "light"
+        ) as HTMLInputElement | null;
+        if (checkBox) {
+          checkBox.checked = true;
+        }
+      } else {
+        const checkBox = document.getElementById(
+          "dark"
+        ) as HTMLInputElement | null;
+        if (checkBox) {
+          checkBox.checked = true;
+        }
       }
     }
-  }, []);
+  }, [themeValue]);
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -81,7 +84,9 @@ export default function Example({ themeValue }: Props) {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="shrink-0">
-                <img
+                <Image
+                height={120}
+            width={120}
                   alt="Your Company"
                   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                   className="size-8"
@@ -238,7 +243,9 @@ export default function Example({ themeValue }: Props) {
                   <MenuButton className="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    <img
+                    <Image
+                    height={120}
+            width={120}
                       alt=""
                       src={user.imageUrl}
                       className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
@@ -302,7 +309,9 @@ export default function Example({ themeValue }: Props) {
           <div className="border-t border-white/10 pt-4 pb-3">
             <div className="flex items-center px-5">
               <div className="shrink-0">
-                <img
+                <Image
+                height={120}
+            width={120}
                   alt=""
                   src={user.imageUrl}
                   className="size-10 rounded-full outline -outline-offset-1 outline-white/10"

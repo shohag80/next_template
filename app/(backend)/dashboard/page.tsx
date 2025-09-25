@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export default function DashboardPage() {
   const [subhanAllah, setsubhanAllah] = useState(0);
   const [alhamdulillah, setalhamdulillah] = useState(0);
@@ -23,10 +23,10 @@ export default function DashboardPage() {
         return prov == 100 ? (prov = 0) : prov + 1;
       });
     } else {
-      setsubhanAllah((prov) => (prov = 0));
-      setalhamdulillah((prov) => (prov = 0));
-      setlailahaIllallah((prov) => (prov = 0));
-      setallahuAkbar((prov) => (prov = 0));
+      setsubhanAllah(0);
+      setalhamdulillah(0);
+      setlailahaIllallah(0);
+      setallahuAkbar(0);
     }
   }
   return (
@@ -43,7 +43,7 @@ export default function DashboardPage() {
           <div className="absolute bg-[url('/assets/bg_images/dashboard_bg.jpg')] bg-cover h-[75vh] w-[63%] blur-sm"></div>
           <div className="absolute p-10">
             <p className="mb-6 text-4xl text-white font-bold">
-              Let's Say Tasbiha...
+              Let&apos;s Say Tasbiha...
             </p>
             <button
               className="bg-orange-500 text-white w-30 h-30 rounded-full mr-1 hover:shadow-xl hover:shadow-orange-300"

@@ -5,6 +5,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import url from "@/app/_route/route";
+import Image from "next/image";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -33,23 +34,25 @@ export default function Header({ themeValue }: Props) {
   };
 
   useEffect(() => {
-    setTheme(themeValue == "light" ? "light" : "dark");
-    if (themeValue === "light") {
-      const checkBox = document.getElementById(
-        "light"
-      ) as HTMLInputElement | null;
-      if (checkBox) {
-        checkBox.checked = true;
-      }
-    } else {
-      const checkBox = document.getElementById(
-        "dark"
-      ) as HTMLInputElement | null;
-      if (checkBox) {
-        checkBox.checked = true;
+    if(themeValue){
+      setTheme(themeValue == "light" ? "light" : "dark");
+      if (themeValue === "light") {
+        const checkBox = document.getElementById(
+          "light"
+        ) as HTMLInputElement | null;
+        if (checkBox) {
+          checkBox.checked = true;
+        }
+      } else {
+        const checkBox = document.getElementById(
+          "dark"
+        ) as HTMLInputElement | null;
+        if (checkBox) {
+          checkBox.checked = true;
+        }
       }
     }
-  }, []);
+  }, [themeValue]);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
@@ -60,9 +63,11 @@ export default function Header({ themeValue }: Props) {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
+            <Image
               alt=""
-              src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="/assets/logo/mark.svg"
+              width={120}
+              height={120}
               className="h-8 w-auto"
             />
           </a>
@@ -219,9 +224,11 @@ export default function Header({ themeValue }: Props) {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
+              <Image
+              height={120}
+            width={120}
                 alt=""
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                src="/assets/logo/mark.svg"
                 className="h-8 w-auto"
               />
             </a>
