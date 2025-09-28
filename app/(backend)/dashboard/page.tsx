@@ -78,7 +78,7 @@ export default function DashboardPage() {
               Allahu-Akber
             </button>
             <button
-              className="bg-red-500 text-white text-4xl w-15 h-15 rounded-full ml-10"
+              className="bg-red-500 text-white text-4xl w-15 h-15 rounded-full ml-10 hover:scale-110 transform"
               onClick={() => Countable("reset")}
             >
               ✘
