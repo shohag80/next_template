@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import GoBack from "@/components/pages/go-back";
 import api from "@/config/service/api";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +10,7 @@ interface DataType {
   email: string;
   password: string;
   password_confirmation: string;
+  active_status: number;
 }
 
 interface APIErrorResponse {
@@ -22,15 +23,16 @@ interface APIErrorResponse {
   };
 }
 
-
 export default function UserInfoPage() {
   const param = useParams();
+  const route = useRouter();
   const [data, setData] = useState<DataType>();
   const [formData, setFormData] = useState<DataType>({
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
+    active_status: 1,
   });
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export default function UserInfoPage() {
           email: user.email,
           password: "",
           password_confirmation: "",
+          active_status: user.active_status,
         });
       }
     }
@@ -81,6 +84,7 @@ export default function UserInfoPage() {
         if (response.data.meta.http_status == 200) {
           const user_data = response.data.data;
           toast.success(user_data.name + " is updated successfully.");
+          route.back();
         }
         formDataReset();
       } catch (e) {
@@ -100,6 +104,7 @@ export default function UserInfoPage() {
       email: "",
       password: "",
       password_confirmation: "",
+      active_status: 1,
     });
   }
 
@@ -190,7 +195,7 @@ export default function UserInfoPage() {
               </div>
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="password"
+                  htmlFor="password_confirmation"
                   className="block text-sm/6 font-medium text-white"
                 >
                   Confirm Password
@@ -207,6 +212,47 @@ export default function UserInfoPage() {
                     className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                   />
                 </div>
+              </div>
+              <div className="sm:col-span-6 flex">
+                <label
+                  htmlFor="active_status"
+                  className="block text-sm/6 font-medium text-white"
+                >
+                  Active ?
+                </label>&nbsp;&nbsp;&nbsp;
+                <input
+                  name="active_status"
+                  type="radio"
+                  value="1"
+                  id="active"
+                  checked={formData.active_status == 1}
+                  onChange={handleChange}
+                  className="block rounded-md bg-white/5 px-42 py-1.5 text-base text-white placeholder:text-gray-500 sm:text-sm/6"
+                />{" "}
+                &nbsp;
+                <label
+                  htmlFor="active"
+                  className="text-green-500 cursor-pointer"
+                >
+                  Yes
+                </label>{" "}
+                &nbsp;&nbsp;&nbsp;
+                <input
+                  name="active_status"
+                  type="radio"
+                  value="0"
+                  id="inactive"
+                  checked={formData.active_status == 0}
+                  onChange={handleChange}
+                  className="block rounded-md bg-white/5 px-3 py-1.5 text-base text-white placeholder:text-gray-500 sm:text-sm/6"
+                />{" "}
+                &nbsp;
+                <label
+                  htmlFor="inactive"
+                  className="text-red-500 cursor-pointer"
+                >
+                  No
+                </label>
               </div>
             </div>
             <div className="mt-6 flex items-center justify-end gap-x-6">
