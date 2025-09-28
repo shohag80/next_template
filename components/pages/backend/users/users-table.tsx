@@ -16,11 +16,10 @@ import {
 import type { FilterDropdownProps } from "antd/es/table/interface";
 import api from "@/config/service/api";
 
-
 interface UsersTableProps {
   users: DataType[];
   fetchUsersData: () => void;
-};
+}
 
 interface DataType {
   id: string;
@@ -42,7 +41,7 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   useEffect(() => {
     setData(users);
     setLoading(false);
-  },[users]);
+  }, [users]);
 
   const handleSearch = (
     selectedKeys: string[],
@@ -145,9 +144,9 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   const confirm =
     (id: string): PopconfirmProps["onConfirm"] =>
     async () => {
-        await api.delete("/user/" + id);
-        fetchUsersData();
-        message.success("User deleted successfully!");
+      await api.delete("/user/" + id);
+      fetchUsersData();
+      message.success("User deleted successfully!");
     };
 
   const columns: TableColumnsType<DataType> = [
@@ -166,7 +165,7 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
       ...getColumnSearchProps("name"),
       sorter: (a, b) => a.name.localeCompare(b.name),
       sortDirections: ["descend", "ascend"],
-      showSorterTooltip:true,
+      showSorterTooltip: true,
     },
     {
       title: "Email",
@@ -200,7 +199,9 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
       dataIndex: "id",
       key: "action",
       width: "15%",
-      render: (id) => ( //use (record){for full object}
+      render: (
+        id //use (record){for full object}
+      ) => (
         <>
           <div className="flex justify-between">
             <Link href={url.b_userView(id)}>
@@ -235,8 +236,13 @@ export default function UsersTable({ users, fetchUsersData }: UsersTableProps) {
   ];
   return (
     <>
-    <span className="font-bold py-3">You Search: {searchText} this value of
-    {searchedColumn} column;</span>
+      {searchText && searchText !== "" ? (
+        <span className="font-bold py-3">
+          You searched: <strong>{searchedColumn}</strong> where{" "}
+          <strong>{searchText}</strong>;
+        </span>
+      ) : null}
+
       <Table<DataType>
         rowKey="id"
         size={`small`}
